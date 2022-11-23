@@ -21,15 +21,16 @@ class MyWidget(QWidget):
 
     def handle(self):
         x, y = random.randint(200, 800), random.randint(200, 800)
-        r = random.randint(1, 200)
-        self.c.append(QRect(x - r, y - r, r, r))
+        rad = random.randint(1, 200)
+        r, g, b = [random.randint(0, 255) for i in range(3)]
+        self.c.append(((r, g, b), QRect(x - rad, y - rad, rad, rad)))
         self.repaint()
 
     def paintEvent(self, a0: QtGui.QPaintEvent) -> None:
         painter = QPainter()
         painter.begin(self)
-        for rect in self.c:
-            r, g, b = 255, 255, 0
+        for color, rect in self.c:
+            r, g, b = color
             painter.setBrush(QColor(r, g, b))
             painter.drawEllipse(rect)
         painter.end()
